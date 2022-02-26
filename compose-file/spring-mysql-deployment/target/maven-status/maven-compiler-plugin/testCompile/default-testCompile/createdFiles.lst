@@ -1,0 +1,8 @@
+com\spring\boot\movie\app\controller\IndexControllerTest.class
+com\spring\boot\movie\app\model\ActorTest.class
+com\spring\boot\movie\app\model\CityTest.class
+com\spring\boot\movie\app\model\CustomerTest.class
+com\spring\boot\movie\app\model\CategoryTest.class
+com\spring\boot\movie\app\model\CountryTest.class
+com\spring\boot\movie\app\model\AddressTest.class
+com\spring\boot\movie\app\MovieApplicationTests.class
