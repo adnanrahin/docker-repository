@@ -7,3 +7,5 @@ services:
       dockerfile: Dockerfile
     image: openjdk11.0.11-jre-slim-buster
     container_name: docker-dev-env
+    volumes:
+      - /Users/${USER}/.aws:/root/.aws

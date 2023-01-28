@@ -20,6 +20,10 @@ RUN cd /root && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" 
   && unzip /root/awscliv2.zip \
   && cd /root && ./aws/install
 
+RUN cd /root && mkdir ".aws" && touch /root/.aws/credentials
+
+
+
 
 FROM builder as deve-env
 
