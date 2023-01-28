@@ -1,7 +1,9 @@
 FROM openjdk:11.0.11-jre-slim-buster as builder
 
 # Add Dependencies for PySpark
-RUN apt-get update && apt-get install -y curl vim wget software-properties-common unzip ssh net-tools ca-certificates python3 python3-pip python3-numpy python3-matplotlib python3-scipy python3-pandas python3-simpy
+RUN apt-get update && apt-get install -y curl vim wget software-properties-common  \
+    unzip ssh net-tools ca-certificates  \
+    python3 python3-pip python3-numpy python3-matplotlib python3-scipy python3-pandas python3-simpy
 
 RUN update-alternatives --install "/usr/bin/python" "python" "$(which python3)" 1
 
@@ -21,8 +23,6 @@ RUN cd /root && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" 
   && cd /root && ./aws/install
 
 RUN cd /root && mkdir ".aws" && touch /root/.aws/credentials
-
-
 
 
 FROM builder as deve-env
