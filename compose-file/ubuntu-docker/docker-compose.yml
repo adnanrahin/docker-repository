@@ -1,11 +1,11 @@
 version: "3.7"
 services:
   #service 1: definition of mysql database
-  jdk-work-env:
+  development-env:
     build:
       context: .                          #docker file path (. means root directory)
       dockerfile: Dockerfile
-    image: openjdk11.0.11-jre-slim-buster
+    image: ubuntu-development-env
     container_name: docker-dev-env
     volumes:
       - /Users/${USER}/.aws:/root/.aws
