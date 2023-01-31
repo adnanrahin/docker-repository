@@ -39,6 +39,9 @@ RUN cd /root && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" 
 
 RUN cd /root && mkdir ".aws" && touch /root/.aws/credentials
 
+
+RUN cd /root && rm -rf *
+
 FROM builder as dev-env
 
 ENV MAVEN_HOME /usr/share/maven
