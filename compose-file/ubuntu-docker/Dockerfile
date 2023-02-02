@@ -38,7 +38,7 @@ RUN cd /root && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" 
   && cd /root && ./aws/install
 
 RUN cd /root && mkdir ".aws" && touch /root/.aws/credentials
-
+RUN cd /root && mkdir "shared_drive"
 
 RUN cd /root && rm -rf *
 

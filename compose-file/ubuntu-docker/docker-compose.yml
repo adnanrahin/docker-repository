@@ -9,3 +9,4 @@ services:
     container_name: docker-dev-env
     volumes:
       - /Users/${USER}/.aws:/root/.aws
+      - /Users/${USER}/docker-share:/root/shared_drive
