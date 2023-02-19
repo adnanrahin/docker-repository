@@ -8,5 +8,6 @@ services:
     image: ubuntu-development-env
     container_name: docker-dev-env
     volumes:
-      - /Users/${USER}/.aws:/root/.aws
-      - /Users/${USER}/docker-share:/root/shared_drive
+      - ~/.aws:/root/.aws
+      - ~/docker-share:/root/shared_drive
+      - ~/aws-keys:/root/aws-keys
