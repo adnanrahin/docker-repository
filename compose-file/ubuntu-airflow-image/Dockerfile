@@ -11,11 +11,10 @@ RUN apt-get update && apt-get install -y curl vim wget software-properties-commo
     python3 python3-pip
 
 RUN pip3 install apache-airflow[gcp,sentry,statsd]
-RUN mkdir ~/airflow
+RUN mkdir -p ~/airflow/dags
 RUN cd ~/airflow && airflow db init
 RUN cd ~/airflow && airflow users create --username admin --password admin --firstname Adnan --lastname Rahin --role Admin --email rahin.devtools@gmail.com
-RUN cd ~/airflow && airflow scheduler -D
-RUN cd ~/airflow && airflow webserver -D
+
 
 FROM builder as airflow-container
 
