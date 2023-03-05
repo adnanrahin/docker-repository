@@ -10,15 +10,14 @@ RUN apt-get update && apt-get install -y curl vim wget software-properties-commo
     unzip less ssh net-tools ca-certificates jq git-all\
     python3 python3-pip
 
-#RUN pip3 install virtualenv
-#RUN "virtualenv ~/airflow_env" && "source ~/airflow_env/bin/activate" && "mkdir ~/airflow" &&  \
-#    pip3 install apache-airflow[gcp,sentry,statsd] && cd ~/airflow && airflow db init && "mkdir ~/airflow/dags"
-#
-#RUN cd ~/airflow && airflow users create --username admin --password admin --firstname Adnan --lastname Rahin --role Admin --email rahin.devtools@gmail.com
-#
-#RUN airflow scheduler -D && airflow webserver -D
+RUN pip3 install apache-airflow[gcp,sentry,statsd]
+RUN mkdir ~/airflow
+RUN cd ~/airflow && airflow db init
+RUN cd ~/airflow && airflow users create --username admin --password admin --firstname Adnan --lastname Rahin --role Admin --email rahin.devtools@gmail.com
+RUN cd ~/airflow && airflow scheduler -D
+RUN cd ~/airflow && airflow webserver -D
 
-FROM builder as dev-env
+FROM builder as airflow-container
 
 EXPOSE 8080
 
