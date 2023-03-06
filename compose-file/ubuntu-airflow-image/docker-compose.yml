@@ -14,4 +14,3 @@ services:
       - ~/docker-share:/root/shared_drive
       - ~/aws-keys:/root/aws-keys
       - ~/airflow/dags:/root/airflow/dags
-      - ~/
