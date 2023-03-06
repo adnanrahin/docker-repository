@@ -2,6 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/compose-file/docker-hadoop" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/compose-file/docker-spark-cluster" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/compose-file/spark-standalone-cluster-on-docker" vcs="Git" />
   </component>
 </project>
