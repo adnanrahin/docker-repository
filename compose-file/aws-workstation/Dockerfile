@@ -4,8 +4,6 @@ RUN yum -y update --disablerepo=extras \
     && yum install --disablerepo=extras -y \
     ksh \
     python3 \
-    java-1.8.0-openjdk \
-    java-11-openjdk \
     crontabs \
     unzip \
     openssl \
@@ -18,6 +16,15 @@ RUN yum -y update --disablerepo=extras \
     net-tools ca-certificates \
     jq  \
     git-all
+
+WORKDIR /root
+
+RUN cd /root && curl https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz -o "JDK_11.tar.gz"  \
+    && tar -zxvf JDK_11.tar.gz     \
+    && mkdir -p /usr/local/jvm     \
+    && mv ~/jdk-11.0.1 /usr/local/jvm
+
+ENV JAVA_HOME /usr/local/jvm/jdk-11.0.1
 
 RUN echo "export JAVA_HOME=/usr/local/jvm/jdk-11.0.1" >> ~/.bashrc
 RUN echo "export PATH=$JAVA_HOME/bin:$PATH" >> ~/.bashrc
