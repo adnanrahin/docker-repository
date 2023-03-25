@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  #service 1: definition of mysql database
+  development-env:
+    build:
+      context: .                          #docker file path (. means root directory)
+      dockerfile: Dockerfile
+    image: aws-development-env
+    container_name: aws-env
+    volumes:
+      - ~/.aws:/root/.aws
+      - ~/docker-share:/root/shared_drive
+      - ~/aws-keys:/root/aws-keys
