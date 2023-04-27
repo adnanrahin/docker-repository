@@ -6,7 +6,7 @@ services:
       context: .                          #docker file path (. means root directory)
       dockerfile: Dockerfile
     image: ubuntu-development-env
-    container_name: docker-dev-env
+    container_name: ubuntu-env
     volumes:
       - ~/.aws:/root/.aws
       - ~/docker-share:/root/shared_drive

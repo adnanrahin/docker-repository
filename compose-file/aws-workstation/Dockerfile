@@ -4,6 +4,8 @@ RUN yum -y update --disablerepo=extras \
     && yum install --disablerepo=extras -y \
     ksh \
     python3 \
+    java-1.8.0-openjdk \
+    java-11-openjdk \
     crontabs \
     unzip \
     openssl \
