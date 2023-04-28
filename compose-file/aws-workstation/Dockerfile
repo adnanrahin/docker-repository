@@ -16,8 +16,9 @@ RUN yum -y update --disablerepo=extras \
     less  \
     ssh  \
     net-tools ca-certificates \
-    jq  \
     git-all
+
+RUN yum install epel-release -y && yum install jq -y 
 
 WORKDIR /root
 
