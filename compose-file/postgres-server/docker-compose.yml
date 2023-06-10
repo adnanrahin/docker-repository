@@ -1,0 +1,34 @@
+version: "3.8"
+services: 
+  db: 
+    image: postgres:14.1-alpine
+    container_name: docker_pg
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports: 
+      - "5432:5432"
+    volumes: 
+      - ~/docker-share/postgres/docker-pg-vol/data:/var/lib/postgresql/data
+
+volumes: 
+  pg-data: 
+    driver: local
+
+# version: '3.8'
+# services:
+#   db:
+#     image: postgres:14.1-alpine
+#     container_name: post
+#     restart: always
+#     environment:
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=postgres
+#     ports:
+#       - '5432:5432'
+#     volumes: 
+#       - ~/docker-share/postgres/data:/var/lib/postgresql/data
+# volumes:
+#   db:
+#     driver: local
