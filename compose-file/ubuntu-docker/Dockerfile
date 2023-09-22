@@ -24,7 +24,7 @@ RUN echo "export PATH=$JAVA_HOME/bin:$PATH" >> ~/.bashrc
 
 ARG MAVEN_VERSION=3.6.3
 ARG USER_HOME_DIR="/root"
-ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
+ARG BASE_URL=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/${MAVEN_VERSION}
 
 
 RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
