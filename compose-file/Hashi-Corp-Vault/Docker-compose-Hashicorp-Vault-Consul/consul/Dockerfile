@@ -14,7 +14,7 @@ RUN apk --no-cache add \
       wget
 
 # download and set up consul
-RUN wget --quiet --no-check-certificate --output-document=/tmp/consul.zip https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
+RUN wget --quiet --output-document=/tmp/consul.zip https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
     unzip /tmp/consul.zip -d /consul && \
     rm -f /tmp/consul.zip && \
     chmod +x /consul/consul
