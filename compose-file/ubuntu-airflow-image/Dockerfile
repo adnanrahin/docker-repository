@@ -1,29 +1,34 @@
-FROM ubuntu:22.04 as builder
+# Use Ubuntu 22.04 as the base image
+FROM ubuntu:22.04
 
-ARG DEBIAN_FRONTEND=noninteractive
+# Set environment variables to prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt update
-RUN apt upgrade -y
+# Update the package list and install necessary dependencies
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:deadsnakes/ppa && \
+    apt-get update && \
+    apt-get install -y python3.7 python3.7-dev python3.7-venv python3-pip && \
+    apt-get clean
 
-# Add Dependencies for PySpark
+RUN apt-get update && apt-get install -y curl vim wget  \
+    unzip less ssh net-tools ca-certificates jq
 
-RUN mkdir ~/dependency
+# Verify the installation
+RUN python3.7 --version && pip3 --version
 
-RUN apt-get update && apt-get install -y curl vim wget software-properties-common  \
-    unzip less ssh net-tools ca-certificates jq git-all\
-    python3 python3-pip
+# Set the default Python version to 3.7
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
 
-COPY ./dependency /root/dependency
-WORKDIR /root/dependency
+# Set up a virtual environment (optional)
+RUN python -m venv /venv
 
-RUN pip install -r ~/dependency/requirements.txt
-
+# Install dependencies
+RUN pip3 install "apache-airflow[celery]==2.5.1" --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.5.1/constraints-3.7.txt"
+RUN pip3 install psycopg2-binary
+RUN pip3 install apache-airflow-providers-amazon==7.4.1
 RUN mkdir -p ~/airflow/dags
-RUN cd ~/airflow && airflow db init
-RUN cd ~/airflow && airflow users create --username admin --password admin --firstname Adnan --lastname Rahin --role Admin --email rahin.devtools@gmail.com
-
-
-FROM builder as airflow-container
 
 EXPOSE 8080
 
