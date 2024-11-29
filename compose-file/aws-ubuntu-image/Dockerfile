@@ -7,7 +7,7 @@ RUN apt upgrade -y
 
 # Add Dependencies for PySpark
 RUN apt-get update && apt-get install -y curl vim wget software-properties-common  \
-    unzip less ssh net-tools ca-certificates jq git-all\
+    unzip less ssh net-tools ca-certificates jq git-all \
     python3 python3-pip openssl wget
 
 RUN update-alternatives --install "/usr/bin/python" "python" "$(which python3)" 1
