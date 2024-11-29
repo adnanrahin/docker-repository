@@ -25,7 +25,7 @@ RUN yum install epel-release -y && yum install jq -y
 WORKDIR /root
 
 # Install JDK 11
-RUN cd /root && curl https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz -o "JDK_11.tar.gz"  \
+RUN cd /root && curl https://builds.openlogic.com/downloadJDK/openlogic-openjdk/11.0.25+9/openlogic-openjdk-11.0.25+9-linux-x64.tar.gz -o "JDK_11.tar.gz"  \
     && tar -zxvf JDK_11.tar.gz     \
     && mkdir -p /usr/local/jvm     \
     && mv ~/jdk-11.0.1 /usr/local/jvm
