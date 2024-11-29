@@ -1,8 +1,5 @@
 FROM centos:8
 
-
-RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
-
 # Install required dependencies
 RUN yum -y update && yum install -y \
     ksh \
