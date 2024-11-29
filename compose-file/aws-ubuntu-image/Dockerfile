@@ -30,6 +30,4 @@ RUN cd /root && rm -rf *
 
 FROM builder as ubuntu-aws-img
 
-
-
 ENTRYPOINT ["tail", "-f", "/dev/null"]
