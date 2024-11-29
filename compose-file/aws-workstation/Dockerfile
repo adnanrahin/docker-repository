@@ -1,8 +1,7 @@
 FROM centos:8
 
 # Install required dependencies
-RUN yum -y update --disablerepo=extras \
-    && yum install --disablerepo=extras -y \
+RUN yum -y update && yum install -y \
     ksh \
     python3 \
     crontabs \
