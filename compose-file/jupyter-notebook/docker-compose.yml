@@ -5,7 +5,9 @@ services:
     build: .
     container_name: jupyter
     ports:
-      - "8889:8888"
+      - "8888:8888"
+      - "14041:4041"
+      - "14040:4040"
     volumes:
       - /sandbox/workspace/notebooks:/workspace
       - /sandbox/storage/data:/sandbox/storage/data
