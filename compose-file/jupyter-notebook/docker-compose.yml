@@ -7,4 +7,5 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - /Users/adnanrahin/source-code/jupyter-notebook/notebooks:/workspace
+      - /sandbox/workspace/notebooks:/workspace
+      - /sandbox/storage/data:/data
