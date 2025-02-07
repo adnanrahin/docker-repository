@@ -57,6 +57,8 @@ RUN python -m spylon_kernel install --user
 
 # Expose JupyterLab port
 EXPOSE 8888
+EXPOSE 4040
+EXPOSE 4041
 
 # Set up working directory
 WORKDIR /workspace
