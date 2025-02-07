@@ -3,9 +3,8 @@ version: '3.8'
 services:
   jupyter:
     build: .
+    container_name: jupyter
     ports:
       - "8888:8888"
     volumes:
       - /Users/adnanrahin/source-code/jupyter-notebook/notebooks:/workspace
-    environment:
-      - JUPYTER_TOKEN=your_token_here

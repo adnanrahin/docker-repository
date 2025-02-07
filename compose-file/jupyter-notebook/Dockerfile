@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     curl \
     tar \
+    vim \
     procps \
     && rm -rf /var/lib/apt/lists/*
 
@@ -41,8 +42,18 @@ RUN cd /root \
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-# Install JupyterLab
-RUN pip install jupyterlab
+# Ensure the Jupyter config directory exists
+RUN mkdir -p /root/.jupyter && chmod -R 777 /root/.jupyter
+
+# Copy Jupyter configuration files to /root/.jupyter
+COPY jupyter_server_config.json /root/.jupyter/jupyter_server_config.json
+COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
+
+# Set correct permissions for Jupyter config files
+RUN chmod 600 /root/.jupyter/jupyter_server_config.json /root/.jupyter/jupyter_notebook_config.py
+
+# Install Spylon Kernel
+RUN python -m spylon_kernel install --user
 
 # Expose JupyterLab port
 EXPOSE 8888
