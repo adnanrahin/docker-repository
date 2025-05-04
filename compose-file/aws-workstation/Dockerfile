@@ -1,5 +1,9 @@
 FROM centos:8
 
+# Fix CentOS 8 EOL issues by using vault.centos.org
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
 # Install required dependencies
 RUN yum -y update && yum install -y \
     ksh \
@@ -7,30 +11,33 @@ RUN yum -y update && yum install -y \
     crontabs \
     unzip \
     openssl \
-    unzip \
     make \
     wget \
-    ssh \
-    less  \
+    openssh-clients \
+    less \
     net-tools \
     ca-certificates \
-    git-all
+    git
 
 # Install EPEL and jq
-RUN yum install epel-release -y && yum install jq -y 
+RUN yum install -y epel-release && yum install -y jq 
 
 WORKDIR /root
 
 # Install JDK 11
-RUN cd /root && curl https://builds.openlogic.com/downloadJDK/openlogic-openjdk/11.0.25+9/openlogic-openjdk-11.0.25+9-linux-x64.tar.gz -o "JDK_11.tar.gz"  \
-    && tar -zxvf JDK_11.tar.gz     \
-    && mkdir -p /usr/local/jvm     \
-    && mv ~/jdk-11.0.1 /usr/local/jvm
+RUN cd /root && \
+    curl -L https://builds.openlogic.com/downloadJDK/openlogic-openjdk/11.0.25+9/openlogic-openjdk-11.0.25+9-linux-x64.tar.gz -o "JDK_11.tar.gz" && \
+    tar -zxvf JDK_11.tar.gz && \
+    mkdir -p /usr/local/jvm && \
+    mv openlogic-openjdk-11.0.25+9-linux-x64 /usr/local/jvm/jdk-11.0.25+9 && \
+    ln -s /usr/local/jvm/jdk-11.0.25+9 /usr/local/jvm/jdk-11.0.1 && \
+    rm JDK_11.tar.gz
 
-ENV JAVA_HOME /usr/local/jvm/jdk-11.0.1
+ENV JAVA_HOME=/usr/local/jvm/jdk-11.0.1
+ENV PATH=$JAVA_HOME/bin:$PATH
 
-RUN echo "export JAVA_HOME=/usr/local/jvm/jdk-11.0.1" >> ~/.bashrc
-RUN echo "export PATH=$JAVA_HOME/bin:$PATH" >> ~/.bashrc
+RUN echo "export JAVA_HOME=/usr/local/jvm/jdk-11.0.1" >> ~/.bashrc && \
+    echo "export PATH=\$JAVA_HOME/bin:\$PATH" >> ~/.bashrc
 
 # Install Maven
 ARG MAVEN_VERSION=3.6.3
@@ -68,8 +75,8 @@ RUN cd /root && mkdir "shared_drive"
 RUN cd /root && rm -rf *
 
 # Set environment variables for Maven and Kubernetes CLI
-ENV MAVEN_HOME /usr/share/maven
-ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
+ENV MAVEN_HOME=/usr/share/maven
+ENV MAVEN_CONFIG="$USER_HOME_DIR/.m2"
 ENV PATH=$PATH:/usr/local/bin/kubectl
 
 # Default entrypoint (container will run indefinitely)
