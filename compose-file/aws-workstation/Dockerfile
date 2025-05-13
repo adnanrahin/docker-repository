@@ -19,10 +19,17 @@ RUN yum -y update && yum install -y \
     ca-certificates \
     git
 
+RUN dnf install -y bash-completion
+
 # Install EPEL and jq
-RUN yum install -y epel-release && yum install -y jq 
+RUN yum install -y epel-release && yum install -y jq
 
 WORKDIR /root
+
+# EKSCTL Install
+RUN curl --silent --location "https://github.com/eksctl-io/eksctl/releases/download/v0.207.0/eksctl_Linux_amd64.tar.gz" | tar xz -C /tmp && \
+    mv /tmp/eksctl /usr/local/bin
+
 
 # Install JDK 11
 RUN cd /root && \
@@ -60,24 +67,19 @@ RUN curl -LO https://dl.k8s.io/release/v1.30.6/bin/linux/amd64/kubectl \
     && chmod +x kubectl \
     && mv kubectl /usr/local/bin/
 
-# Install kubectl completion (optional)
-RUN curl -LO https://dl.k8s.io/release/v1.30.6/bin/linux/amd64/kubectl-completion \
-    && chmod +x kubectl-completion \
-    && mv kubectl-completion /usr/local/bin/
+# Enable kubectl autocomplete
+RUN echo "source /usr/share/bash-completion/bash_completion" >> ~/.bashrc && \
+    echo "source <(kubectl completion bash)" >> ~/.bashrc && \
+    echo "alias k=kubectl" >> ~/.bashrc && \
+    echo "complete -F __start_kubectl k" >> ~/.bashrc
 
-# Configure AWS CLI (optional, can be skipped if you don't need it)
-RUN cd /root && mkdir ".aws" && touch /root/.aws/credentials
+# Configure AWS CLI (optional)
+RUN mkdir -p /root/.aws && touch /root/.aws/credentials
 
-# Create a shared directory (optional, can be removed)
-RUN cd /root && mkdir "shared_drive"
-
-# Clean up unnecessary files (optional, depending on requirements)
-RUN cd /root && rm -rf *
-
-# Set environment variables for Maven and Kubernetes CLI
+# Set environment variables
 ENV MAVEN_HOME=/usr/share/maven
 ENV MAVEN_CONFIG="$USER_HOME_DIR/.m2"
-ENV PATH=$PATH:/usr/local/bin/kubectl
+ENV PATH=$PATH:/usr/local/bin
 
-# Default entrypoint (container will run indefinitely)
+# Default entrypoint (container runs indefinitely)
 ENTRYPOINT ["tail", "-f", "/dev/null"]
